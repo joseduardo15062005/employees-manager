@@ -1,0 +1,26 @@
+{
+  "name": "dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joseduardo15062005/employees-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joseduardo15062005/employees-manager/issues"
+  },
+  "homepage": "https://github.com/joseduardo15062005/employees-manager#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "inquirer": "^8.2.0",
+    "mysql2": "^2.3.2"
+  }
+}
