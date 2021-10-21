@@ -15,7 +15,8 @@ CREATE TABLE role (
     department_id INTEGER,
     FOREIGN KEY (department_id) 
     REFERENCES department(id)
-    ON DELETE SET NULL
+    ON DELETE ON SET NULL
+    
 );
 
 CREATE TABLE manager (
