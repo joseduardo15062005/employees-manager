@@ -15,3 +15,49 @@ const options = [
     ],
   },
 ];
+
+const newDepartmentQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "Department Name:",
+  },
+  {
+    type: "confirm",
+    name: "manager_role",
+    message: "Is Manager Department ?",
+  },
+];
+
+const newRoleQuestions = [
+  {
+    type: "input",
+    name: "title",
+    message: "Role title:",
+  },
+  {
+    type: "input",
+    name: "salary",
+    message: "Annual Salary:",
+  },
+];
+
+const newEmployeesQuestions = [
+  {
+    type: "input",
+    name: "first_name",
+    message: "Employees First Name:",
+  },
+  {
+    type: "input",
+    name: "last_name",
+    message: "Employees Last Name:",
+  },
+];
+
+module.exports = {
+  options,
+  newDepartmentQuestions,
+  newRoleQuestions,
+  newEmployeesQuestions,
+};
