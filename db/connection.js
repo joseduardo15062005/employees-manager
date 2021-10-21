@@ -61,6 +61,14 @@ async function getRoles() {
   return result[0];
 }
 
+async function getRole(id) {
+  const sql = `SELECT role.id,role.title,CONCAT('$',FORMAT(role.salary,2)) AS role_salary,department.name as department_name
+    FROM role  INNER JOIN department ON role.department_id=department.id 
+    WHERE role.id=?`;
+  const result = await pool.query(sql, id);
+  return result[0];
+}
+
 async function insertDepartment(name, manager_role) {
   try {
     const sql = "INSERT INTO department (name,manager_role) VALUES (?,?)";
@@ -112,14 +120,27 @@ async function updateEmployee(employee) {
     throw error;
   }
 }
+
+async function updateRole(role) {
+  try {
+    const sql = `UPDATE role set title=?, salary=?,department_id=? WHERE id=?`;
+    const params = [role.title, role.salary, role.department_id, role.id];
+    const result = await pool.query(sql, params);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   getEmployees,
   getEmployee,
   getRoles,
+  getRole,
   getDeparments,
   getManagers,
   insertDepartment,
   insertRole,
   insertEmployee,
   updateEmployee,
+  updateRole,
 };

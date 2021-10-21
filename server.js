@@ -12,11 +12,13 @@ const {
   getEmployee,
   getDeparments,
   getRoles,
+  getRole,
   getManagers,
   insertDepartment,
   insertRole,
   insertEmployee,
   updateEmployee,
+  updateRole,
 } = require("./db/connection");
 
 Init();
@@ -64,9 +66,58 @@ function askOptions() {
         case "Update an Employee":
           console.clear();
           return update_Employee();
+        case "Update a Role":
+          console.clear();
+          return update_Role();
       }
     })
     .catch((err) => console.error(err));
+}
+
+async function update_Role() {
+  const questions = [];
+  const departments = await getDeparments();
+  let roleId = 0;
+
+  getRoles()
+    .then((roles) => {
+      const question = [];
+      question.push(createRoleListQuestion(roles, "Select the role update:"));
+      return inquirer.prompt(question);
+    })
+    .then((answer) => {
+      roleId = answer.role_id;
+      return getRole(roleId);
+    })
+    .then((role) => {
+      console.log(role);
+      const titleQuestion = {
+        type: "input",
+        name: "title",
+        message: "title:",
+        default: role[0].title,
+      };
+      questions.push(titleQuestion);
+      const salaryQuestion = {
+        type: "input",
+        name: "salary",
+        message: "Annual Salary:",
+        default: role[0].role_salary,
+      };
+      questions.push(
+        createDepartmentListQuestion(departments, "Select the Department")
+      );
+
+      questions.push(salaryQuestion);
+      return inquirer.prompt(questions);
+    })
+    .then((answer) => {
+      answer.id = roleId;
+      return updateRole(answer);
+    })
+    .then((result) => {
+      return askOptions();
+    });
 }
 
 function update_Employee() {
@@ -175,6 +226,40 @@ function createRoleQuestionChoice(roles) {
     type: "list",
     name: "role_id",
     message: "Select the employee role:",
+    choices: choices,
+  };
+}
+
+function createDepartmentListQuestion(departments, question) {
+  let choices = [];
+  for (const { name, id } of departments) {
+    const choice = {
+      name,
+      value: id,
+    };
+    choices.push(choice);
+  }
+  return {
+    type: "list",
+    name: "department_id",
+    message: question,
+    choices: choices,
+  };
+}
+
+function createRoleListQuestion(roles, question) {
+  let choices = [];
+  for (const { title, id } of roles) {
+    const choice = {
+      name: title,
+      value: id,
+    };
+    choices.push(choice);
+  }
+  return {
+    type: "list",
+    name: "role_id",
+    message: question,
     choices: choices,
   };
 }
