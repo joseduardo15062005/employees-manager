@@ -13,6 +13,7 @@ const options = [
       "Delete an Employee",
       "Update an Employee",
       "Update a Role",
+      "View employees by manager",
     ],
   },
 ];

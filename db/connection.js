@@ -42,6 +42,22 @@ async function getEmployee(id) {
   return result[0];
 }
 
+async function getEmployeesByManager(managerId) {
+  const sql = `
+  SELECT  e.id,CONCAT(e.first_name,' ',e.last_name) as full_name, 
+  role.title as employee_role, CONCAT('$',FORMAT(role.salary,2)) as employee_salary,
+  manager.name as manager_name,department.name as employee_deparment, e.first_name as first_name,e.last_name as last_name
+  FROM employee AS e
+  INNER JOIN manager ON manager.id =e.manager_id 
+  INNER JOIN role ON role.id=e.role_id
+  INNER JOIN department ON department.id=role.department_id
+  WHERE  e.manager_id=?
+  `;
+
+  const result = await pool.query(sql, managerId);
+  return result[0];
+}
+
 async function deleteEmployee(id) {
   const sql = `DELETE FROM  employee WHERE id=?`;
 
@@ -141,6 +157,7 @@ async function updateRole(role) {
 module.exports = {
   getEmployees,
   getEmployee,
+  getEmployeesByManager,
   getRoles,
   getRole,
   getDeparments,
