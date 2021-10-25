@@ -26,6 +26,7 @@ const {
   insertEmployee,
   updateEmployee,
   updateRole,
+  deleteEmployee,
 } = require("../db/connection");
 
 function askOptions() {
@@ -64,6 +65,9 @@ function askOptions() {
         case "Add an Employee":
           console.clear();
           return createEmployee();
+        case "Delete an Employee":
+          console.clear();
+          return delete_Employee();
         case "Update an Employee":
           console.clear();
           return update_Employee();
@@ -71,6 +75,25 @@ function askOptions() {
           console.clear();
           return update_Role();
       }
+    })
+    .catch((err) => console.error(err));
+}
+
+//Delret an employee
+function delete_Employee() {
+  let employeeId = 0;
+  getEmployees()
+    .then((employees) => {
+      const employeeQuestion = createEmployeeQuestionList(employees);
+      return inquirer.prompt(employeeQuestion);
+    })
+    .then((answer) => {
+      //Select the employee to delete
+      employeeId = answer.employee_id;
+      return deleteEmployee(employeeId);
+    })
+    .then((result) => {
+      return askOptions();
     })
     .catch((err) => console.error(err));
 }

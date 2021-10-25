@@ -10,6 +10,7 @@ const options = [
       "Add a Department",
       "Add a Role",
       "Add an Employee",
+      "Delete an Employee",
       "Update an Employee",
       "Update a Role",
     ],

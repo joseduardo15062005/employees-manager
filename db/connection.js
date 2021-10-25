@@ -42,6 +42,13 @@ async function getEmployee(id) {
   return result[0];
 }
 
+async function deleteEmployee(id) {
+  const sql = `DELETE FROM  employee WHERE id=?`;
+
+  const result = await pool.query(sql, id);
+  return result[0];
+}
+
 async function getDeparments() {
   const result = await pool.query("SELECT * FROM department ORDER BY name ASC");
   return result[0];
@@ -143,4 +150,5 @@ module.exports = {
   insertEmployee,
   updateEmployee,
   updateRole,
+  deleteEmployee,
 };
