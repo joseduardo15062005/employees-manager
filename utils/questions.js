@@ -14,6 +14,7 @@ const options = [
       "Update an Employee",
       "Update a Role",
       "View employees by manager",
+      "View employees by department",
     ],
   },
 ];

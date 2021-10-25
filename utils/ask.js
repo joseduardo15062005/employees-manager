@@ -18,6 +18,7 @@ const {
   getEmployees,
   getEmployee,
   getEmployeesByManager,
+  getEmployeesByDepartment,
   getDeparments,
   getRoles,
   getRole,
@@ -78,7 +79,29 @@ function askOptions() {
         case "View employees by manager":
           console.clear();
           return viewEmployeesByManager();
+        case "View employees by department":
+          console.clear();
+          return viewEmployeesByDepartment();
       }
+    })
+    .catch((err) => console.error(err));
+}
+
+//view employees by department
+function viewEmployeesByDepartment() {
+  let departmentId = 0;
+  getDeparments()
+    .then((departments) => {
+      const departmentQuestion = createDepartmentQuestionList(departments);
+      return inquirer.prompt(departmentQuestion);
+    })
+    .then((answer) => {
+      departmentId = answer.department_id;
+      return getEmployeesByDepartment(departmentId);
+    })
+    .then((employees) => {
+      printDataTable("Employees", employees);
+      return askOptions();
     })
     .catch((err) => console.error(err));
 }
