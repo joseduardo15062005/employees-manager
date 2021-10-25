@@ -11,7 +11,6 @@ this project manage employee from a MySql database. at this moment hava the oper
 ## Table of Contents
 
 - [Usage](#usage)
-- [Credits](#credits)
 - [Questions](#questions)
 - [License](#license)
 
